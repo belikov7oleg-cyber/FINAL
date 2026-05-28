@@ -1,50 +1,102 @@
+# Основная команда запуска Django-сервера
 run = ["python", "manage.py", "runserver", "0.0.0.0:3000"]
+
+# Точка входа проекта
 entrypoint = "manage.py"
+
+# Используемая версия Python
 modules = ["python-3.10:v18-20230807-322e88b"]
 
+# Скрытая системная папка зависимостей
 hidden = [".pythonlibs"]
 
+# Настройка Nix-среды
 [nix]
+
+# Стабильный канал Nix-пакетов
 channel = "stable-24_05"
 
+# Настройки unit-тестирования
 [unitTest]
+
+# Язык выполнения тестов
 language = "python3"
 
+# Параметры deployment контейнера
 [deployment]
+
+# Команда запуска контейнера
 run = ["python", "manage.py", "runserver", "0.0.0.0:3000"]
+
+# Deployment через Google Compute Engine
 deploymentTarget = "gce"
 
+# Основной web-порт Django
 [[ports]]
 localPort = 3000
 externalPort = 3000
 
+# Дополнительный порт контейнера
 [[ports]]
 localPort = 8000
 externalPort = 8000
 
+# Настройки Replit Agent
 [agent]
+
+# Расширенный режим работы агента
 expertMode = true
 
+# Настройки workflow Replit
 [workflows]
+
+# Workflow, запускаемый кнопкой Run
 runButton = "Project"
 
+# Основной workflow проекта
 [[workflows.workflow]]
+
+# Название workflow
 name = "Project"
+
+# Параллельный режим выполнения
 mode = "parallel"
+
+# Автор workflow
 author = "agent"
 
+# Задача запуска workflow
 [[workflows.workflow.tasks]]
+
+# Запуск workflow приложения
 task = "workflow.run"
+
+# Имя запускаемого workflow
 args = "Start application"
 
+# Workflow запуска приложения
 [[workflows.workflow]]
+
+# Название workflow
 name = "Start application"
+
+# Автор workflow
 author = "agent"
 
+# Метаданные workflow
 [workflows.workflow.metadata]
+
+# Вывод логов в консоль
 outputType = "console"
 
+# Задача запуска Django-сервера
 [[workflows.workflow.tasks]]
+
+# Выполнение shell-команды
 task = "shell.exec"
+
+# Команда запуска Django
 args = "python manage.py runserver 0.0.0.0:3000"
+
+# Ожидание открытия порта 3000
 waitForPort = 3000
